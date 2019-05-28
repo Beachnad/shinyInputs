@@ -1,0 +1,29 @@
+.w-50px {
+  width: 50px;
+}
+
+.w-100px {
+  width: 100px;
+}
+
+.w-200px {
+  width: 200px;
+}
+
+.w-300px {
+  width: 300px;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.green {
+  background-color: #6dd283;
+  border: 1px solid #28b348;
+}
+
+.red {
+  background-color: #f35866;
+  border: 1px solid #b90f1f;
+}

@@ -9,3 +9,4 @@ License: MIT
 LazyData: true
 imports:
     shiny (>= 0.14)
+RoxygenNote: 6.1.1.9000

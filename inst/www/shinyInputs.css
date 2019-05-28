@@ -1,0 +1,28 @@
+/**
+ * pretty-checkbox.css
+ *
+ * A pure CSS library to beautify checkbox and radio buttons
+ *
+ * Source: https://github.com/lokesh-coder/pretty-checkbox
+ * Demo: https://lokesh-coder.github.io/pretty-checkbox
+ *
+ * Copyright (c) 2017 Lokesh rajendran
+ */
+ 
+input.other-radio-text-input {
+    opacity: 1 !important;
+    left: 100% !important;
+    display: inline !important;
+    height: 20px;
+    font-size: inherit;
+    font-family: inherit;
+    top: -2px;
+    width: 200px;
+    margin-left: 5px;
+}
+
+
+/*
+Adapted from shinyWidgets
+*/
+
