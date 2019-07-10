@@ -87,6 +87,17 @@ attachShinyInputsDep <- function(tag, widget=NULL){
         stylesheet = "radio_other.css"
       )
     )
+  } else if (widget == 'checkbox text'){
+    dep <- list(
+      custom_dep,
+      # jquery_dep,
+      htmltools::htmlDependency(
+        name = "CheckboxText",
+        version = version,
+        src = c(href = "shinyInputs/checkboxText"),
+        script = "checkbox_text.js"
+      )
+    )
   }
   
   htmltools::attachDependencies(tag, dep, append = TRUE)

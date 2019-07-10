@@ -109,3 +109,35 @@ $.extend(radioButtonsOther, {
 
 Shiny.inputBindings.register(radioButtonsOther, 'shiny.radioButtonsOther');
 
+
+// adderInput Binding
+var checkboxTextBinding = new Shiny.InputBinding();
+$.extend(checkboxTextBinding, {
+  find: function(scope) {
+    return $(scope).find(".checkbox-text-container");
+  },
+  getValue: function(el) {
+    checked = $(el).find('input[type=checkbox]').prop('checked');
+    console.log("Here ========");
+    console.log(checked);
+    if(checked){
+      return $(el).find('input[type=text]').val();
+    } else {
+      return null;
+    }
+  },
+  
+  setValue: function(el, value) {
+    $(el).text(value);
+  },
+  subscribe: function(el, callback) {
+    $(el).on("change", '*',function(e) {
+      callback();
+    });
+    
+  },
+  unsubscribe: function(el) {
+    $(el).off(".incrementBinding");
+  }
+});
+Shiny.inputBindings.register(checkboxTextBinding, "checkboxTextInput");

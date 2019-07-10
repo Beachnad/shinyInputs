@@ -25,6 +25,12 @@ ui <- shinyUI(fluidPage(
     sidebarLayout(
         fluidRow(
             style='padding: 30px;',
+            
+            checkboxTextInput('checkbox_input', 'Some Text'),
+            # textOutput('checkbox_input_text'),
+            verbatimTextOutput('checkbox_input_text'),
+            tags$h3("============="),
+            
             toggleButton('toggleButton', "Toggle Button Demo",
                          choiceNames = c('Male', 'Female', 'Unknown'),
                          choiceValues = c('M', 'F', 'U')),
@@ -95,6 +101,8 @@ server <- function(input, output) {
     observeEvent(input$add_vtp, {
         appendVerticalTab('vtsp', verticalTabPanel('New Panel', tags$h2('New New New')))
     })
+    
+    output$checkbox_input_text <- renderText(input$checkbox_input)
     
 }
 
