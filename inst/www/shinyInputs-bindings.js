@@ -54,7 +54,6 @@ $.extend(toggleButtonBinding, {
   },
   getValue: function(el) {
     var val = $(el).find('button.toggle-button').attr('value');
-    console.log(val);
     return val;
   },
   setValue: function(el, value) {
@@ -93,7 +92,6 @@ $.extend(radioButtonsOther, {
     if(selectedRadio.hasClass('other-radio-input')){
       return $(el).find('.other-radio-text-input').val();
     } else {
-      console.log(selectedRadio.val());
       return selectedRadio.val(); 
     }
   },
@@ -110,6 +108,46 @@ $.extend(radioButtonsOther, {
 Shiny.inputBindings.register(radioButtonsOther, 'shiny.radioButtonsOther');
 
 
+/*
+checbox other input binding
+*/
+var checkBoxesOther = new Shiny.InputBinding();
+$.extend(checkBoxesOther, {
+
+  // This returns a jQuery object with the DOM element
+  find: function(scope) {
+    return $(scope).find('.cust-input-checkbox-group');
+  },
+  getId: function(el) {
+    return el.id;
+  },
+  getValue: function(el) {
+    var values = [];
+  
+    $(el).find('input[type=checkbox]:not(.other-checkbox-input):checked').each(function(){
+      values.push($(this).val());
+    });
+    
+    if ($(el).find('input[type=checkbox].other-checkbox-input:checked').length  == 1){
+      let other_val = $(el).find('.other-checkbox-text-input').val();
+      values.push(other_val);
+    }
+    
+    return values;
+  },
+  subscribe: function(el, callback) {
+    $(el).on('change.checkBoxesOther', function(event) {
+      callback();
+    });
+  },
+  unsubscribe: function(el) {
+    $(el).off('.checkBoxesOther');
+  }
+});
+
+Shiny.inputBindings.register(checkBoxesOther, 'shiny.checkBoxesOther');
+
+
 // adderInput Binding
 var checkboxTextBinding = new Shiny.InputBinding();
 $.extend(checkboxTextBinding, {
@@ -118,8 +156,6 @@ $.extend(checkboxTextBinding, {
   },
   getValue: function(el) {
     checked = $(el).find('input[type=checkbox]').prop('checked');
-    console.log("Here ========");
-    console.log(checked);
     if(checked){
       return $(el).find('input[type=text]').val();
     } else {
