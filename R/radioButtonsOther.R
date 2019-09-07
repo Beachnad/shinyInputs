@@ -18,11 +18,11 @@
 radioButtonsOther <- function(id, label, choices = NULL, choiceNames=NULL, choiceValues=NULL, selected=NULL, otherLabel="Other", placeholder=NULL, ...) {
   choice_opts <- choiceOpts(choices, choiceNames, choiceValues)
   
-  html <- prettyRadioButtons(id, label,
-                             choiceNames = choice_opts$names,
-                             choiceValues = choice_opts$values,
-                             selected = selected,
-                             ...)
+  html <- shinyWidgets::prettyRadioButtons(id, label,
+                                           choiceNames = choice_opts$names,
+                                           choiceValues = choice_opts$values,
+                                           selected = selected,
+                                           ...)
   
   html$attribs$class <- "form-group cust-input-radio-group shiny-input-container"
   
