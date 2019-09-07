@@ -6,7 +6,7 @@
 \usage{
 radioButtonsOther(id, label, choices = NULL, choiceNames = NULL,
   choiceValues = NULL, selected = NULL, otherLabel = "Other",
-  placeholder = NULL)
+  placeholder = NULL, ...)
 }
 \arguments{
 \item{id}{The input slot that will be used to access the value.}

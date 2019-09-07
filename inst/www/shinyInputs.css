@@ -21,6 +21,21 @@ input.other-radio-text-input {
     margin-left: 5px;
 }
 
+input.other-radio-text-input {
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 2px solid #91b7e6;
+    width: unset !important;
+    height: unset !important;
+    margin-top: -2px !important;
+    margin-left: 5px !important;
+    margin-left: 5px;
+    padding: 0px;
+    background: transparent;
+    top: -3px !important;
+}
+
 
 input.other-checkbox-text-input {
     opacity: 1 !important;
@@ -34,6 +49,28 @@ input.other-checkbox-text-input {
     margin-left: 5px;
 }
 
+input.other-checkbox-text-input {
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 2px solid #91b7e6;
+    width: unset !important;
+    height: unset !important;
+    margin-top: -2px !important;
+    margin-left: 5px !important;
+    margin-left: 5px;
+    padding: 0px;
+    background: transparent;
+    top: -3px !important;
+}
+
+div.cust-input-radio-group div.shiny-options-group div:first-child{
+    display: none;
+}
+
+div.cust-input-checkbox-group div.shiny-options-group div:first-child{
+    display: none;
+}
 
 /*
 Adapted from shinyWidgets

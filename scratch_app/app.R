@@ -26,9 +26,11 @@ ui <- shinyUI(fluidPage(
         fluidRow(
             style='padding: 30px;',
             
-            checkBoxesOther('checkbox_other', 'Checkbox with Other', c(1, 2, 3), otherLabel = 'Something Else?'),
+            checkboxGroupInput('checkbox_group', 'Checkbox Normal', c(1, 2, 3)),
+            checkBoxesOther('checkbox_other', 'Checkbox with Other', c(1, 2, 3), selected=NULL, otherLabel = 'Something Else?',
+                            icon = icon("check"),status = "primary"),
             verbatimTextOutput('checkbox_other_out'),
-            
+            tags$hr(),
             checkboxTextInput('checkbox_input', 'Some Text'),
             # textOutput('checkbox_input_text'),
             verbatimTextOutput('checkbox_input_text'),
@@ -45,11 +47,13 @@ ui <- shinyUI(fluidPage(
             ),
             radioButtonsOther('radOther', 'Radio Buttons w/ Other',
                               choiceNames = c('English', 'Spanish', 'Russian'),
-                              choiceValues = c('E', 'S', NA)),
+                              choiceValues = c('E', 'S', 'Russian'),
+                              status='primary', icon=icon('check')),
+            verbatimTextOutput('radOther_out'),
             radioButtonsOther('radOther2', 'Radio Buttons w/ Other 2',
                               choices = c('English', 'Spanish', 'Russian'),
                               selected = 'Spanish'),
-            verbatimTextOutput('radOtherOutput'),
+            verbatimTextOutput('radOther2Output'),
             radioButtonsOther('radOther3', 'Radio Buttons w/ Other 3',
                               choices = c('English', 'Spanish', 'Russian'),
                               selected = "Indian"),
@@ -111,7 +115,7 @@ server <- function(input, output) {
         data()
     })
     
-    output$radOtherOutput <- renderText(input$radOther)
+    output$radOther2Output <- renderText(input$radOther2)
     
     output$radOtherOutput3  <- renderText(input$radOther3)
     
@@ -121,6 +125,10 @@ server <- function(input, output) {
     
     output$checkbox_input_text <- renderText({
         input$checkbox_input
+    })
+    
+    output$radOther_out <- renderText({
+        input$radOther
     })
     
 }

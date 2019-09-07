@@ -105,8 +105,7 @@ attachShinyInputsDep <- function(tag, widget=NULL){
       htmltools::htmlDependency(
         name = "checkBoxesOther",
         version = version,
-        src = c(href = "shinyInputs/checkBoxesOther"),
-        script = "checkbox_other.js"
+        src = c(href = "shinyInputs/checkBoxesOther")
       )
     )
   }

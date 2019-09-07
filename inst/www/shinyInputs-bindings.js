@@ -81,13 +81,13 @@ $.extend(radioButtonsOther, {
 
   // This returns a jQuery object with the DOM element
   find: function(scope) {
-    return $(scope).find('.cust-input-radiogroup');
+    return $(scope).find('div.cust-input-radio-group');
   },
   getId: function(el) {
     return el.id;
   },
   getValue: function(el) {
-    let selectedRadio = $('input:radio[name="' + el.id + '"]:checked');
+    let selectedRadio = $(el).find('input:radio[name="' + el.id  + '"]:checked');
     
     if(selectedRadio.hasClass('other-radio-input')){
       return $(el).find('.other-radio-text-input').val();
@@ -116,7 +116,7 @@ $.extend(checkBoxesOther, {
 
   // This returns a jQuery object with the DOM element
   find: function(scope) {
-    return $(scope).find('.cust-input-checkbox-group');
+    return $(scope).find('div.cust-input-checkbox-group');
   },
   getId: function(el) {
     return el.id;

@@ -1,4 +1,4 @@
-#' Shiny radio buttons with other input os last item
+#' Shiny checbox buttons with other input os last item
 #' 
 #' Given an input id, label, and possible choices, will
 #' generate radio buttons. The final radio button will
@@ -15,73 +15,29 @@
 #'     as logicals and numbers) will be coerced to strings.
 #' @param selected The initially selected value (if not specified then defaults to the first value)
 #' @export
-checkBoxesOther <- function(id, label, choices = NULL, choiceNames=NULL, choiceValues=NULL, selected=NULL, otherLabel="Other", placeholder=NULL) {
+checkBoxesOther <- function(id, label, choices = NULL, choiceNames=NULL, choiceValues=NULL, selected=NULL, otherLabel="Other", placeholder=NULL, ...) {
   choice_opts <- choiceOpts(choices, choiceNames, choiceValues)
-  selected <- ifnull(selected, choice_opts$names[1])
   
-  radio_item_wrapper <- function(radio_value, input_html, span=T){
-    shiny::tagList(
-      shiny::tags$div(style="height:3px;"),
-      shiny::tags$div(
-        class="pretty p-default",
-        input_html,
-        shiny::tags$div(
-          class = "state p-primary",
-          style = 'margin-right: 5px;',
-          shiny::tags$label(tags$span(radio_value))
-        )
-      ) 
-    )
-  }
-  radio_item <- function(value, label){
-    value = ifelse(is.na(value), 'NA', value)
-    if (value == selected)
-      el <- radio_item_wrapper(value, shiny::tags$input(type="checkbox", name=id, value=value, checked='checked'))
-    else
-      el <- radio_item_wrapper(value, shiny::tags$input(type="checkbox", name=id, value=value))
-    el
+  html <- prettyCheckboxGroup(id, label,
+                              choiceNames = choice_opts$names,
+                              choiceValues = choice_opts$values,
+                              selected = selected,
+                              ...)
+  
+  html$attribs$class <- "form-group cust-input-checkbox-group shiny-input-container"
+  
+  if (is.null(selected)){
+    html$children[[2]]$children
   }
   
-  rad_items <- mapply(radio_item, value=choice_opts$values, label=choice_opts$names, SIMPLIFY = F)
-  shiny_default_class <- "form-group shiny-input-radiogroup shiny-input-container"
-  div_class <- paste(shiny_default_class, "si-radio-group")
+  new_html <- tail(html$children[[2]]$children[[2]], 1)[[1]][[1]]
+  new_html$children[[1]]$attribs$class <- "other-checkbox-input"
   
-  html <- shiny::tags$div(
-    id=id,
-    class = 'cust-input-checkbox-group form-group shiny-input-checkboxgroup shiny-input-container',
-    shiny::tags$label(label, `for` = id, class="control-label"),
-    shiny::tags$div(
-      class="shiny-options-group",
-      shiny::tags$div(style="height:7px;"),
-      tagList(rad_items),
-      radio_item_wrapper(
-        radio_value = otherLabel,
-        input_html = tagList(
-          {
-            html <- shiny::tags$input(
-              class="other-checkbox-input",
-              type="checkbox",
-              placeholder=placeholder,
-              name=id,
-              shiny::tags$input(
-                id=paste0(id, '-text'),
-                class='other-checkbox-text-input form-control',
-                type='text',
-                value = ifelse(selected %in% choice_opts$names, '', selected)
-              )
-            )
-            # browser()
-            if(!selected %in% choice_opts$names){
-              html$attribs$checked <- 'checked'
-            }
-            html
-          }
-          
-        ),
-        span = F
-      )
-    )
-  )
+  new_html$children[[2]]$children[[2]]$children[[1]] <- span(otherLabel)
+  new_html$children[[3]] <- tags$input(type='text', class='other-checkbox-text-input form-control shiny-bound-input')
+  
+  i <- length(html$children[[2]]$children) + 1
+  html$children[[2]]$children[[i]] <- new_html
   
   attachShinyInputsDep(html, 'checkbox other')
 }
