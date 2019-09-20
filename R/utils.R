@@ -15,6 +15,6 @@ choiceOpts <- function(choices=NULL, choiceNames=NULL, choiceValues=NULL){
 }
 
 ifnull <- function(x, expr){
-  ifelse(is.null(x), expr, x)
+  ifelse(is.null(x) || is.na(x), expr, x)
 }
 
