@@ -36,11 +36,14 @@ radioButtonsOther <- function(id, label, choices = NULL, choiceNames=NULL, choic
   new_html$children[[2]]$children[[2]]$children[[1]] <- span(otherLabel)
   textInput <- tags$input(type='text', class='other-radio-text-input form-control shiny-bound-input')
   
-  if (!(selected %in% choice_opts$values)){
-    textInput$attribs$`init-value` <- selected
-  } else {
-    textInput$attribs$`init-value` <- ''
+  textInput$attribs$`init-value` <- ''
+  
+  if (!is.null(selected)){
+    if (!(selected %in% choice_opts$values)){
+      textInput$attribs$`init-value` <- selected
+    }
   }
+
   
   new_html$children[[3]] <- textInput
   
