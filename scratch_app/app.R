@@ -25,47 +25,13 @@ ui <- shinyUI(fluidPage(
     sidebarLayout(
         fluidRow(
             style='padding: 30px;',
-            
-            checkboxGroupInput('checkbox_group', 'Checkbox Normal', c(1, 2, 3)),
-            checkBoxesOther('checkbox_other', 'Checkbox with Other', c(1, 2, 3), selected=NULL, otherLabel = 'Something Else?',
-                            icon = icon("check"),status = "primary"),
-            verbatimTextOutput('checkbox_other_out'),
-            tags$hr(),
-            checkboxTextInput('checkbox_input', 'Some Text'),
-            # textOutput('checkbox_input_text'),
-            verbatimTextOutput('checkbox_input_text'),
-            tags$h3("============="),
-            
-            toggleButton('toggleButton', "Toggle Button Demo",
-                         choiceNames = c('Male', 'Female', 'Unknown'),
-                         choiceValues = c('M', 'F', 'U')),
-            adderInput('adder', "My Label", c('Starts with', 'Ends with', 'Contains', 'Is'), placeholder = "Enter Here",
-                       toggle_button = tglBtn),
-            dynamicWrapper(
-                'myDynamicWrapper',
-                adderInput('inner_adder', "My Label", c('Starts with', 'Ends with', 'Contains', 'Is'), placeholder = "Enter Here")
+            checkBoxesOther(
+                'checkbox_other_id',
+                'Checkboxes Other',
+                choices = c('Apples', 'Pears', 'Plums'),
+                selected = c('Apples', 'Peaches', 'Apricot')
             ),
-            radioButtonsOther('radOther', 'Radio Buttons w/ Other',
-                              choiceNames = c('English', 'Spanish', 'Russian'),
-                              choiceValues = c('E', 'S', 'Russian'),
-                              status='primary', icon=icon('check')),
-            verbatimTextOutput('radOther_out'),
-            radioButtonsOther('radOther2', 'Radio Buttons w/ Other 2',
-                              choices = c('English', 'Spanish', 'Russian'),
-                              selected = 'Spanish'),
-            verbatimTextOutput('radOther2Output'),
-            radioButtonsOther('radOther3', 'Radio Buttons w/ Other 3',
-                              choices = c('English', 'Spanish', 'Russian'),
-                              selected = "Indian"),
-            verbatimTextOutput('radOtherOutput3'),
-            verticalTabsetPanel(
-                verticalTabPanel('Panel 1', tags$h2('Panel Content'), tags$p("Lorem Ipsum ... ")),
-                verticalTabPanel('Panel 2', tags$h2('Panel Content'), tags$p("Lorem Ipsum ... ")),
-                id = 'vtsp'
-            ),
-            actionButton('add_vtp', "New", icon('plus')),
-            checkboxTextInput('cbti', 'Checkbox Text Input 1'),
-            checkboxTextInput('cbti', 'Checkbox Text Input 2', "Checked")
+            verbatimTextOutput('checkbox_other_id_val')
         ),
         # Show a plot of the generated distribution
         mainPanel(
@@ -77,60 +43,7 @@ ui <- shinyUI(fluidPage(
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-    
-    createNew <- function(id, label){tags$div(
-        class='well',
-        style='margin:8px;',
-        adderInput(id, label, c('Starts with', 'Ends with', 'Contains', 'Is'), placeholder = "Enter Here")
-    )}
-    
-    observeEvent(input$add_new, {
-        randomX <- sample(1:100, 1)
-        insertUI('#multi-container', 'beforeEnd', createNew(randomX, paste(randomX, 'Filter')))
-    })
-    
-    output$table <- renderTable({
-        df <- data.frame(
-            labels = unlist(input$adder$labels),
-            values = unlist(input$adder$values),
-            stringsAsFactors = FALSE
-        )
-        df
-    })
-    
-    output$checkbox_other_out <- renderText({
-        print(input$checkbox_other)
-        input$checkbox_other
-    })
-    
-    output$toggle_btn <- renderText(input$toggleButton)
-    
-    data <- reactive({
-        input$toggleButton
-        print("Hi")
-        print(input$inner_adder)
-    })
-    
-    observeEvent(input$toggleButton, {
-        data()
-    })
-    
-    output$radOther2Output <- renderText(input$radOther2)
-    
-    output$radOtherOutput3  <- renderText(input$radOther3)
-    
-    observeEvent(input$add_vtp, {
-        appendVerticalTab('vtsp', verticalTabPanel('New Panel', tags$h2('New New New')))
-    })
-    
-    output$checkbox_input_text <- renderText({
-        input$checkbox_input
-    })
-    
-    output$radOther_out <- renderText({
-        input$radOther
-    })
-    
+    output$checkbox_other_id_val <- renderText(input$checkbox_other_id)
 }
 
 shinyApp(ui, server)

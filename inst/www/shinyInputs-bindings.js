@@ -118,6 +118,16 @@ $.extend(checkBoxesOther, {
   find: function(scope) {
     return $(scope).find('div.cust-input-checkbox-group');
   },
+  
+  initialize: function(el){
+    let initValue = $(el).find('.other-checkbox-text-input').attr('initial-value');
+    if (initValue === undefined){
+      let initValue = '';
+    }
+    
+    $(el).find('.other-checkbox-input:checked').parent().find('.other-checkbox-text-input').val(initValue);
+  },
+  
   getId: function(el) {
     return el.id;
   },
