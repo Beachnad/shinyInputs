@@ -8,5 +8,6 @@ Depends: R (>= 3.1.0)
 License: MIT
 LazyData: true
 imports:
-    shiny (>= 0.14)
+    shiny (>= 0.14),
+    htmltools
 RoxygenNote: 6.1.1.9000
