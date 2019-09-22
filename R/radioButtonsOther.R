@@ -15,7 +15,7 @@
 #'     as logicals and numbers) will be coerced to strings.
 #' @param selected The initially selected value (if not specified then defaults to the first value)
 #' @export
-radioButtonsOther <- function(id, label, choices = NULL, choiceNames=NULL, choiceValues=NULL, selected=NULL, otherLabel="Other", placeholder=NULL, ...) {
+radioButtonsOther <- function(id, label, choices = NULL, choiceNames=NULL, choiceValues=NULL, selected=NULL, otherLabel="Other", ...) {
   choice_opts <- choiceOpts(choices, choiceNames, choiceValues)
   
   html <- shinyWidgets::prettyRadioButtons(id, label,
@@ -34,11 +34,23 @@ radioButtonsOther <- function(id, label, choices = NULL, choiceNames=NULL, choic
   new_html$children[[1]]$attribs$class <- "other-radio-input"
   
   new_html$children[[2]]$children[[2]]$children[[1]] <- span(otherLabel)
-  new_html$children[[3]] <- tags$input(type='text', class='other-radio-text-input form-control shiny-bound-input')
+  textInput <- tags$input(type='text', class='other-radio-text-input form-control shiny-bound-input')
+  
+  if (!(selected %in% choice_opts$values)){
+    textInput$attribs$`init-value` <- selected
+  } else {
+    textInput$attribs$`init-value` <- ''
+  }
+  
+  new_html$children[[3]] <- textInput
+  
+
   
   i <- length(html$children[[2]]$children) + 1
   html$children[[2]]$children[[i]] <- new_html
 
+
+  
   attachShinyInputsDep(html, 'radio other')
 }
 

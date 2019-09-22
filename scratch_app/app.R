@@ -8,6 +8,7 @@
 #
 
 library(shiny)
+library(shinyjs)
 library(shinyInputs)
 library(shinyWidgets)
 
@@ -17,6 +18,7 @@ tglBtn <- toggleButton('toggleButton2', 'some label',
 
 # Define UI for application that draws a histogram
 ui <- shinyUI(fluidPage(
+    shinyjs::useShinyjs(),
 
     # Application title
     titlePanel("Old Faithful Geyser Data"),
@@ -25,13 +27,22 @@ ui <- shinyUI(fluidPage(
     sidebarLayout(
         fluidRow(
             style='padding: 30px;',
+            actionButton('clear', 'Clear Form'),
             checkBoxesOther(
                 'checkbox_other_id',
                 'Checkboxes Other',
                 choices = c('Apples', 'Pears', 'Plums'),
                 selected = c('Apples', 'Peaches', 'Apricot')
             ),
-            verbatimTextOutput('checkbox_other_id_val')
+            verbatimTextOutput('checkbox_other_id_val'),
+            
+            radioButtonsOther(
+                'radio_other_id',
+                'Radio Other',
+                choices = c('Car', 'Truck', 'Plane'),
+                selected = "Train"
+            ),
+            verbatimTextOutput('radio_other_id_val')
         ),
         # Show a plot of the generated distribution
         mainPanel(
@@ -44,6 +55,13 @@ ui <- shinyUI(fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
     output$checkbox_other_id_val <- renderText(input$checkbox_other_id)
+    
+    output$radio_other_id_val <- renderText(input$radio_other_id)
+    
+    
+    observeEvent(input$clear, shinyjs::runjs("$('input:checked').removeAttr('checked')"))
+
+    
 }
 
 shinyApp(ui, server)

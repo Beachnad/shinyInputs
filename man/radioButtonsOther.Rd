@@ -5,8 +5,7 @@
 \title{Shiny radio buttons with other input os last item}
 \usage{
 radioButtonsOther(id, label, choices = NULL, choiceNames = NULL,
-  choiceValues = NULL, selected = NULL, otherLabel = "Other",
-  placeholder = NULL, ...)
+  choiceValues = NULL, selected = NULL, otherLabel = "Other", ...)
 }
 \arguments{
 \item{id}{The input slot that will be used to access the value.}

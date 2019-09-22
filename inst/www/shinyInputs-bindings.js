@@ -78,7 +78,16 @@ Radio input binding
 */
 var radioButtonsOther = new Shiny.InputBinding();
 $.extend(radioButtonsOther, {
-
+  initialize: function(el){
+    let tgt = $(el).find('input[init-value]');
+    let v = tgt.attr('init-value');
+    
+    $(tgt).val(v);
+    if (v !== ''){
+      $(el).find('input.other-radio-input').prop('checked', true);
+    }
+  
+  },
   // This returns a jQuery object with the DOM element
   find: function(scope) {
     return $(scope).find('div.cust-input-radio-group');
@@ -89,7 +98,11 @@ $.extend(radioButtonsOther, {
   getValue: function(el) {
     let selectedRadio = $(el).find('input:radio[name="' + el.id  + '"]:checked');
     
-    if(selectedRadio.hasClass('other-radio-input')){
+    console.log(selectedRadio);
+    
+    if(selectedRadio.length === 0){
+      return null;
+    } else if (selectedRadio.hasClass('other-radio-input')){
       return $(el).find('.other-radio-text-input').val();
     } else {
       return selectedRadio.val(); 
@@ -97,6 +110,7 @@ $.extend(radioButtonsOther, {
   },
   subscribe: function(el, callback) {
     $(el).on('change.radioButtonsOther', function(event) {
+      console.log('changed');
       callback();
     });
   },
