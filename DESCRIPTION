@@ -9,5 +9,6 @@ License: MIT
 LazyData: true
 Imports:
     shiny (>= 0.14),
-    htmltools (>= 0.3.5)
+    htmltools (>= 0.3.5),
+    shinyWidgets (>= 0.4.9)
 RoxygenNote: 6.1.1
